@@ -69,9 +69,9 @@ public class Tab3 extends Fragment implements LoaderManager.LoaderCallbacks<Curs
 
     @Override
     public void onLoadFinished(Loader<Cursor> arg0, Cursor cursor) {
-        cursor.moveToFirst();
         if (cursor != null)
         {
+            cursor.moveToFirst();
             ExpListItemsactual = SetStandardGroups_actual();
             ExpAdapter = new ExpandListAdapter(getActivity(), ExpListItemsactual);
             ExpandList.setAdapter(ExpAdapter);

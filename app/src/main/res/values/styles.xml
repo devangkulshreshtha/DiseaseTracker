@@ -1,18 +1,28 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
 
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/ColorPrimary</item>
         <item name="colorPrimaryDark">@color/ColorPrimaryDark</item>
-        <item name="actionOverflowMenuStyle">@style/CMOptionsMenu</item>
-        <!-- Customize your theme here. -->
+
+
     </style>
 
-    <style name="CMOptionsMenu" parent="Widget.AppCompat.PopupMenu.Overflow">
-        <item name="android:popupBackground">@color/ColorPrimary</item>
-        <item name="android:actionMenuTextColor">#212121</item>
+    <style name="AppTheme.Toolbar" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="android:minHeight">?attr/actionBarSize</item>
+        <item name="popupTheme">@style/AppTheme.ActionBar.Popup</item>
+        <item name="theme">@style/ThemeOverlay.MyApp.ActionBar</item>
     </style>
 
+    <!-- Overflow drop down style -->
+    <style name="AppTheme.ActionBar.Popup" parent="Widget.AppCompat.Light.PopupMenu.Overflow">
+        <item name="android:background">?attr/colorPrimary</item>
+    </style>
+
+    <style name="ThemeOverlay.MyApp.ActionBar" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:textColorPrimary">#ffffff</item>
+    </style>
 
 </resources>

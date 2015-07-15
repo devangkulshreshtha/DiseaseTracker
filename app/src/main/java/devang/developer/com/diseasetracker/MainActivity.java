@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.content.Intent;
 
 /**
  * Created by Edwin on 15/02/2015.
@@ -24,6 +25,13 @@ public class MainActivity extends ActionBarActivity {
     SlidingTabLayout tabs;
     CharSequence Titles[] = {"Track Disease", "Reports"};
     int Numboftabs = 2;
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +54,7 @@ public class MainActivity extends ActionBarActivity {
             values.disease_score[l] = 0.0;
         }
         values.x = 0;
+        values.direct = 0;
         values.index = 0;
         values.counter = 0;
         toolbar = (Toolbar) findViewById(R.id.tool_bar);

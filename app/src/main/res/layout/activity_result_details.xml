@@ -65,25 +65,17 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:layout_below="@id/progressBar6"
-                    android:layout_marginTop="5.0dip"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="8dp"
                     android:text="Medium Risk"
                     android:textColor="@color/accent" />
-
-                <TextView
-                    android:id="@+id/textView26"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:textColor="@color/primary_text"
-                    android:text="You must see a pulmonologist or oncologist!" />
 
                 <TextView
                     android:id="@+id/textView28"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/progressBar6"
-                    android:layout_marginTop="5.0dip"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="8dp"
                     android:layout_toEndOf="@id/textView25"
                     android:layout_toRightOf="@id/textView25"
                     android:text="(56%)" />
@@ -200,6 +192,18 @@
                 android:textAppearance="?android:textAppearanceMedium" />
 
             <TextView
+                android:id="@+id/tva1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/textView36"
+                android:layout_alignStart="@id/textView36"
+                android:layout_below="@id/textView36"
+                android:layout_marginTop="12.0dip"
+                android:tag="tvindex8"
+                android:text="8."
+                android:textAppearance="?android:textAppearanceMedium" />
+
+            <TextView
                 android:id="@+id/textView37"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -275,28 +279,18 @@
                 android:textColor="#ff212121" />
 
             <TextView
-                android:id="@+id/textView43"
                 android:layout_width="wrap_content"
+                android:id="@+id/textView43"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/textView44"
-                android:layout_alignLeft="@id/textView42"
-                android:layout_alignStart="@id/textView42"
+                android:layout_above="@+id/tva1"
+                android:layout_marginLeft="10dp"
+                android:layout_toEndOf="@+id/textView35"
+                android:layout_toRightOf="@+id/textView35"
                 android:tag="tvdisease7"
                 android:text="Nausea"
                 android:textAppearance="?android:textAppearanceMedium"
-                android:textColor="#ff212121" />
-
-            <TextView
-                android:id="@+id/tvalag"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/textView44"
-                android:layout_alignLeft="@id/textView43"
-                android:layout_alignStart="@id/textView43"
-                android:tag="tvdisease8"
-                android:text="Nausea"
-                android:textAppearance="?android:textAppearanceMedium"
-                android:textColor="#ff212121" />
+                android:textColor="#212121"
+                />
 
             <ImageView
                 android:id="@+id/imageView2"
@@ -306,7 +300,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="16.0dip"
-                android:src="@drawable/ic_action_i"
+                android:src="@drawable/ic_check_circle_black_24dp"
                 android:tag="iv1" />
 
             <ImageView
@@ -317,7 +311,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="16.0dip"
-                android:src="@drawable/ic_action_i"
+                android:src="@drawable/ic_check_circle_black_24dp"
                 android:tag="iv2" />
 
             <ImageView
@@ -328,7 +322,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="16.0dip"
-                android:src="@drawable/ic_action_i"
+                android:src="@drawable/ic_check_circle_black_24dp"
                 android:tag="iv3" />
 
             <ImageView
@@ -339,7 +333,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="16.0dip"
-                android:src="@drawable/ic_action_i"
+                android:src="@drawable/ic_check_circle_black_24dp"
                 android:tag="iv4" />
 
             <ImageView
@@ -350,7 +344,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="16.0dip"
-                android:src="@drawable/ic_action_i"
+                android:src="@drawable/ic_check_circle_black_24dp"
                 android:tag="iv5" />
 
             <ImageView
@@ -361,7 +355,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="16.0dip"
-                android:src="@drawable/ic_action_i"
+                android:src="@drawable/ic_check_circle_black_24dp"
                 android:tag="iv6" />
 
             <ImageView
@@ -372,33 +366,68 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="16.0dip"
-                android:src="@drawable/ic_action_i"
+                android:src="@drawable/ic_check_circle_black_24dp"
                 android:tag="iv7" />
 
             <ImageView
-                android:id="@+id/imageView9"
+                android:id="@+id/tva3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/tvalag"
+                android:layout_alignBottom="@+id/tva2"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="16.0dip"
-                android:src="@drawable/ic_action_i"
+                android:src="@drawable/ic_check_circle_black_24dp"
                 android:tag="iv8" />
 
             <TextView
-                android:id="@+id/textView44"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@id/textView36"
-                android:layout_alignStart="@id/textView36"
-                android:layout_below="@id/textView36"
-                android:layout_marginTop="16.0dip"
-                android:text="Number of symptoms matched - 4/7"
-                android:textAppearance="?android:textAppearanceMedium"
-                android:textStyle="bold" />
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Symptom"
+                android:id="@+id/tva2"
+                android:tag="tvdisease8"
+                android:layout_marginLeft="8dp"
+                android:textColor="#212121"
+                android:layout_alignTop="@+id/tva1"
+                android:layout_toRightOf="@+id/tva1"
+                android:layout_toEndOf="@+id/tva1" />
 
         </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="No. of symptoms matched : "
+            android:layout_marginTop="16dp"
+            android:textColor="#212121"
+            android:id="@+id/textView7"
+            android:layout_below="@+id/relativeLayout"
+            android:layout_alignLeft="@+id/card_view"
+            android:layout_alignStart="@+id/card_view" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="4/"
+            android:textColor="#212121"
+            android:id="@+id/tvno"
+            android:layout_alignBottom="@+id/textView7"
+            android:layout_toRightOf="@+id/textView7"
+            android:layout_toEndOf="@+id/textView7" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="7"
+            android:textColor="#212121"
+            android:id="@+id/tvtotal"
+            android:layout_alignBottom="@+id/tvno"
+            android:layout_toRightOf="@+id/tvno"
+            android:layout_toEndOf="@+id/tvno" />
 
     </RelativeLayout>
 

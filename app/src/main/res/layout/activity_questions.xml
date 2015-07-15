@@ -70,7 +70,7 @@
         android:text="NO"
         android:textColor="@color/accent" />
 
-    <is.arontibo.library.ElasticDownloadView
+    <devang.developer.com.diseasetracker.ElasticDownloadView
         android:id="@+id/progressBar3"
         android:layout_alignParentBottom="true"
         android:layout_width="wrap_content"

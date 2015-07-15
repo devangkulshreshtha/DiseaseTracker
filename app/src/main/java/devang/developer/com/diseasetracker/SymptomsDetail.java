@@ -22,9 +22,16 @@ public class SymptomsDetail extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_symptoms_detail);
-        setSupportActionBar((Toolbar) findViewById(R.id.tool_bar2));
+        Toolbar toolbar = (Toolbar)findViewById(R.id.tool_bar2);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         Intent i1 = getIntent();
         prgmNameList = i1.getStringArrayExtra("symptoms");
         problem_index = i1.getIntExtra("problem", 0);

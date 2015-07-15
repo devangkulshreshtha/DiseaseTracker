@@ -34,9 +34,38 @@ public class Symptoms extends ActionBarActivity implements View.OnClickListener{
         button = (Button)findViewById(R.id.button);
         button.setOnClickListener(this);
         prgmNameList = values.problems;
-        setSupportActionBar((Toolbar) findViewById(R.id.tool_bar2));
+        if(getIntent().getIntExtra("verify", 0) == 1)
+        {
+            for (int i = 0; i < values.selected_risk_factors.length; i++) {
+                values.selected_risk_factors[i] = 0;
+            }
+
+            for (int j = 0; j < values.selectedsymptoms.length; j++) {
+                values.selectedsymptoms[j] = 0;
+            }
+
+            for (int k = 0; k < values.selectesSymptoms2.length; k++) {
+                values.selectesSymptoms2[k] = 0;
+            }
+
+            for (int l = 0; l < values.disease_score.length; l++) {
+                values.disease_score[l] = 0.0;
+            }
+            values.x = 0;
+            values.direct = 0;
+            values.index = 0;
+            values.counter = 0;
+        }
+        Toolbar toolbar = (Toolbar)findViewById(R.id.tool_bar2);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         lv = (ListView)findViewById(R.id.listView);
         Intent bundle = getIntent();
         if (bundle != null)

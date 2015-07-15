@@ -49,6 +49,10 @@ public class Tab1 extends Fragment implements android.view.View.OnClickListener 
         tvDisease = (TextView) v.findViewById(R.id.tvDisease);
         tvDate = (TextView) v.findViewById(R.id.tvDate);
         imgdirection = (ProgressBar) v.findViewById(R.id.circularProgressBar);
+        tvDisease.setVisibility(View.INVISIBLE);
+        tvDate.setVisibility(View.INVISIBLE);
+        tvPercent.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
         animation();
         LinearLayout linearLayout = (LinearLayout) v.findViewById(R.id.linearLayout);
         linearLayout.setOnClickListener(new View.OnClickListener() {
@@ -60,28 +64,31 @@ public class Tab1 extends Fragment implements android.view.View.OnClickListener 
                         "disease10", "value1", "value2", "value3", "value4", "value5", "value6", "value7", "value8", "value9",
                         "value10", "rating", "note", "date", "year", "month"
                 }, null, null, null);
-                cursor.moveToLast();
-                Intent i = new Intent();
-                i.putExtra("date", cursor.getString(23));
-                i.putExtra("rating", cursor.getString(21));
-                i.putExtra("note", cursor.getString(22));
-                int count = 0;
-                for (int j = 0; j < 10; j++) {
-                    if (cursor.getInt(j + 11) != 0)
-                        count++;
-                    else
-                        break;
+                if(cursor.getCount()!=0)
+                {
+                    cursor.moveToLast();
+                    Intent i = new Intent();
+                    i.putExtra("date", cursor.getString(23));
+                    i.putExtra("rating", cursor.getString(21));
+                    i.putExtra("note", cursor.getString(22));
+                    int count = 0;
+                    for (int j = 0; j < 10; j++) {
+                        if (cursor.getInt(j + 11) != 0)
+                            count++;
+                        else
+                            break;
+                    }
+                    String[] diseases = new String[count];
+                    int[] scores = new int[count];
+                    for (int j = 0; j < count; j++) {
+                        diseases[j] = cursor.getString(j + 1);
+                        scores[j] = cursor.getInt(j + 11);
+                    }
+                    i.putExtra("diseases", diseases);
+                    i.putExtra("scores", scores);
+                    i.setClassName("devang.developer.com.diseasetracker", "devang.developer.com.diseasetracker.History");
+                    startActivity(i);
                 }
-                String[] diseases = new String[count];
-                int[] scores = new int[count];
-                for (int j = 0; j < count; j++) {
-                    diseases[j] = cursor.getString(j + 1);
-                    scores[j] = cursor.getInt(j + 11);
-                }
-                i.putExtra("diseases", diseases);
-                i.putExtra("scores", scores);
-                i.setClassName("devang.developer.com.diseasetracker", "devang.developer.com.diseasetracker.History");
-                startActivity(i);
 
             }
         });
@@ -290,12 +297,18 @@ public class Tab1 extends Fragment implements android.view.View.OnClickListener 
         Cursor cursor = getActivity().getContentResolver().query(ReportListProvider.CONTENT_URI, new String[]{
                 "disease1", "value1", "date"
         }, null, null, null);
-        cursor.moveToLast();
-        tvDisease.setText(cursor.getString(0));
-        tvDate.setText(cursor.getString(2));
-        tvPercent.setText(String.valueOf(cursor.getInt(1)) + "%");
-        progressBar.setProgress(cursor.getInt(1));
-        return;
+        if(cursor.getCount()!=0)
+        {
+            cursor.moveToLast();
+            tvDisease.setVisibility(View.VISIBLE);
+            tvDate.setVisibility(View.VISIBLE);
+            tvPercent.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.VISIBLE);
+            tvDisease.setText(cursor.getString(0));
+            tvDate.setText(cursor.getString(2));
+            tvPercent.setText(String.valueOf(cursor.getInt(1)) + "%");
+            progressBar.setProgress(cursor.getInt(1));
+        }
     }
 
 

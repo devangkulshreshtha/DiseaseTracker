@@ -18,7 +18,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -38,15 +41,70 @@ public class Results extends ActionBarActivity implements View.OnClickListener{
     ImageButton i1,i2,i3,i4,i5;
     EditText note;
     int rating = 0;
+    int isSaved = 0;
     String Note = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
-        setSupportActionBar((Toolbar) findViewById(R.id.tool_bar2));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        Toolbar toolbar = (Toolbar)findViewById(R.id.tool_bar2);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_action_discard);
+        toolbar.hideOverflowMenu();
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.action_restart) {
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                            Results.this);
+                    alertDialogBuilder.setTitle("Confirm restart");
+                    alertDialogBuilder
+                            .setMessage("Do you want to restart your analysis?")
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    Intent i = new Intent();
+                                    i.setClassName("devang.developer.com.diseasetracker","devang.developer.com.diseasetracker.Symptoms");
+                                    i.putExtra("verify", 1);
+                                    startActivity(i);
+                                    Results.this.finish();
+                                }
+                            })
+                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                }
+                return true;
+            }
+        });
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                        Results.this);
+                alertDialogBuilder.setTitle("Confirm exit");
+                alertDialogBuilder
+                        .setMessage("Do you want to end your analysis?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                startActivity(new Intent(Results.this, MainActivity.class));
+                                Results.this.finish();
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+            }
+        });
+
         mRecyclerView = (RecyclerView)findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
@@ -88,59 +146,57 @@ public class Results extends ActionBarActivity implements View.OnClickListener{
             public void onItemClick(int position, View v) {
                 Intent i = new Intent();
                 i.setClassName("devang.developer.com.diseasetracker", "devang.developer.com.diseasetracker.ResultDetails");
-                i.putExtra("index", position);
+                TextView t = (TextView)v.findViewById(R.id.textView24);
+                TextView t1 = (TextView)v.findViewById(R.id.textView28);
+                TextView t2 = (TextView)v.findViewById(R.id.textView25);
+                RoundCornerProgressBar p = (RoundCornerProgressBar)v.findViewById(R.id.progressBar6);
+                i.putExtra("name", t.getText().toString());
+                i.putExtra("score", t1.getText().toString());
+                i.putExtra("risk", t2.getText().toString());
+                i.putExtra("progress", (int)p.getProgress());
                 startActivity(i);
             }
         });
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public void onBackPressed() {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                this);
+        if(isSaved == 0)
+        {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                    this);
 
-        // set title
-        alertDialogBuilder.setTitle("Confirm exit");
+            // set title
+            alertDialogBuilder.setTitle("Confirm exit");
 
-        // set dialog message
-        alertDialogBuilder
-                .setMessage("Your report is not saved yet..")
-                .setPositiveButton("Continue", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // if this button is clicked, close
-                        // current activity
-                        Results.this.finish();
-                    }
-                })
-                .setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog,int id) {
-                        // if this button is clicked, just close
-                        // the dialog box and do nothing
-                        dialog.cancel();
-                    }
-                });
+            // set dialog message
+            alertDialogBuilder
+                    .setMessage("Your report is not saved yet..")
+                    .setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            startActivity(new Intent(Results.this, MainActivity.class));
+                            Results.this.finish();
+                        }
+                    })
+                    .setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int id) {
+                            // if this button is clicked, just close
+                            // the dialog box and do nothing
+                            dialog.cancel();
+                        }
+                    });
 
-        // create alert dialog
-        AlertDialog alertDialog = alertDialogBuilder.create();
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
 
-        // show it
-        alertDialog.show();
+            // show it
+            alertDialog.show();
+        }
+        else
+        {
+            startActivity(new Intent(Results.this, MainActivity.class));
+            Results.this.finish();
+        }
     }
 
     public static void setRecycleViewHeightBasedOnChildren(RecyclerView recyclerview, Context context)
@@ -190,7 +246,7 @@ public class Results extends ActionBarActivity implements View.OnClickListener{
             {
                 obj = "Low Risk";
             } else
-            if (values.finalScores[i] <= 80)
+            if (values.finalScores[i] <= 75)
             {
                 obj = "Medium Risk";
             } else
@@ -256,7 +312,8 @@ public class Results extends ActionBarActivity implements View.OnClickListener{
             contentValues.put(ReportListProvider.KEY_DISEASE10, values.finalDiseases[9]);
             contentValues.put(ReportListProvider.KEY_VALUE10, values.finalScores[9]);
         }
-        String s = (new SimpleDateFormat("dd/MM/yyyy HH:mm")).format(Calendar.getInstance().getTime());
+        String s = (new SimpleDateFormat("dd/MM/yyyy HH:mm:ss")).format(Calendar.getInstance().getTime());
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
         contentValues.put(ReportListProvider.KEY_DATE, s);
         int i = Calendar.getInstance().get(Calendar.MONTH);
         int j = Calendar.getInstance().get(Calendar.YEAR);
@@ -265,7 +322,7 @@ public class Results extends ActionBarActivity implements View.OnClickListener{
         contentValues.put(ReportListProvider.KEY_NOTE, Note);
         contentValues.put(ReportListProvider.KEY_RATING, rating);
         Uri uri = getContentResolver().insert(ReportListProvider.CONTENT_URI, contentValues);
-        Toast.makeText(this, String.valueOf(rating), Toast.LENGTH_SHORT).show();
+        isSaved = 1;
     }
 
     @Override
@@ -281,4 +338,24 @@ public class Results extends ActionBarActivity implements View.OnClickListener{
         else
             rating=5;
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_results, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }

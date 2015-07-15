@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
+
     <include
         android:id="@+id/tool_bar2"
         layout="@layout/tool_bar" />
@@ -33,47 +34,73 @@
         android:layout_marginTop="16.0dip"
         android:hint="E.g. cough" />
 
-    <TextView
-        android:id="@+id/textView20"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@id/editText3"
-        android:layout_marginLeft="16.0dip"
-        android:layout_marginTop="16.0dip"
-        android:text="Your symptoms:"
-        android:textAppearance="?android:textAppearanceMedium"
-        android:textColor="@color/secondary_text" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/editText3">
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@id/editText3"
-        android:layout_marginBottom="16.0dip"
-        android:background="?android:colorBackground"
-        android:text="Next"
-        android:textStyle="italic"
-        android:textColor="@color/accent" />
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/editText3">
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_below="@id/textView20"
-        android:layout_marginBottom="16.0dip"
-        android:layout_marginLeft="16.0dip"
-        android:layout_marginRight="16.0dip"
-        android:layout_marginTop="16.0dip"
-        android:background="@drawable/edittext"
-        android:layout_above="@id/button3">
+            <TextView
+                android:id="@+id/textView20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="16.0dip"
+                android:layout_marginTop="16.0dip"
+                android:text="Your symptoms:"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/secondary_text" />
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/linearLayout2"
+                android:layout_alignParentBottom="true"
+
+                android:layout_alignRight="@+id/linearLayout2"
+                android:background="?android:colorBackground"
+                android:text="Next"
+                android:textColor="@color/accent"
+                android:textStyle="italic" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_above="@id/button3"
+                android:layout_below="@id/textView20"
+                android:layout_marginBottom="16.0dip"
+                android:layout_marginLeft="16.0dip"
+                android:layout_marginRight="16.0dip"
+                android:layout_marginTop="16.0dip"
+                android:background="@drawable/edittext">
+
+                <ListView
+                    android:id="@id/listView"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
 
         <ListView
-            android:id="@id/listView"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent" />
+            android:layout_width="match_parent"
+            android:id="@+id/my_list_view"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            android:visibility="invisible"
+            android:layout_height="wrap_content">
 
-    </LinearLayout>
+        </ListView>
+
+    </FrameLayout>
 
 </RelativeLayout>

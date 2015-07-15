@@ -20,9 +20,16 @@ public class RiskFactors extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_risk_factors);
-        setSupportActionBar((Toolbar)findViewById(R.id.tool_bar2));
+        Toolbar toolbar = (Toolbar)findViewById(R.id.tool_bar2);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         lv = (ListView)findViewById(R.id.listView2);
         lv.setAdapter(new CustomAdapterRisk(this, values.riskFactors));
         button = (Button)findViewById(R.id.button4);
@@ -35,6 +42,27 @@ public class RiskFactors extends ActionBarActivity {
                 if (values.toBeAskedSymptoms != null)
                 {
                     startActivity(new Intent(RiskFactors.this, Questions.class));
+                }
+                else
+                {
+                    int i,j;
+                    for(i=1;i<values.selectedsymptoms.length;i++)
+                    {
+                        if(values.selectedsymptoms[i] == 0)
+                            break;
+                    }
+                    if(i == values.selectedsymptoms.length)
+                    {
+                        values.finalScores = new int[values.diseases.length];
+                        values.finalDiseases = new String[values.diseases.length];
+                        for (j=0;j<values.diseases.length;j++)
+                        {
+                            values.finalDiseases[j] = values.diseases[j];
+                            values.finalScores[j] = 100;
+                        }
+                        values.direct = 1;
+                        startActivity(new Intent(RiskFactors.this, Results.class));
+                    }
                 }
 
             }

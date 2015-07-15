@@ -26,7 +26,7 @@ public class ResultDetails extends ActionBarActivity {
     ImageView iv5;
     ImageView iv6;
     ImageView iv7;
-    ImageView iv8;
+    ImageView tva3;
     RelativeLayout relativeLayout;
     TextView tv1;
     TextView tv10;
@@ -42,15 +42,23 @@ public class ResultDetails extends ActionBarActivity {
     TextView tv7;
     TextView tv8;
     TextView tv9;
-    TextView tvalag;
+    TextView tva1;
+    TextView tva2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result_details);
-        setSupportActionBar((Toolbar) findViewById(R.id.tool_bar2));
+        Toolbar toolbar = (Toolbar)findViewById(R.id.tool_bar2);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         initializeViews();
         makeViewsInvisible();
         name=(TextView)findViewById(R.id.textView24);
@@ -58,20 +66,22 @@ public class ResultDetails extends ActionBarActivity {
         percent=(TextView)findViewById(R.id.textView28);
         progressBar=(RoundCornerProgressBar)findViewById(R.id.progressBar6);
         relativeLayout = (RelativeLayout)findViewById(R.id.relativeLayout);
-        int index = getIntent().getIntExtra("index", 0);
-        int disease_index = get_index_of_disease(values.finalDiseases[index]);
+        String disease = getIntent().getStringExtra("name");
+        int disease_index = get_index_of_disease(disease);
+        int progress = getIntent().getIntExtra("progress", 0);
         name.setText(values.diseases[disease_index]);
+        progressBar.setProgress(progress);
         String x;
-        if(values.finalScores[index] < 50)
+        if(progress < 50)
             x = "Low risk";
-        else if(values.finalScores[index] < 80)
+        else if(progress < 75)
             x = "Medium risk";
         else
             x = "High risk";
         riskstring.setText(x);
-        percent.setText("(" + String.valueOf(values.finalScores[index]) + "%)");
+        percent.setText("(" + String.valueOf(progress) + "%)");
         int bundle[] = values.disease_info[disease_index];
-        int i = 1;
+        int i = 1,count=0;
         while (i <= bundle.length)
         {
             TextView tv = (TextView)relativeLayout.findViewWithTag("tvindex" + String.valueOf(i));
@@ -84,21 +94,26 @@ public class ResultDetails extends ActionBarActivity {
             iv.setVisibility(View.VISIBLE);
             if (values.selectedsymptoms[bundle[i - 1]] == 1)
             {
-                iv.setImageResource(R.drawable.ic_action_done);
+                count ++ ;
+                iv.setImageResource(R.drawable.ic_check_circle_black_24dp);
             } else
             {
-                iv.setImageResource(R.drawable.ic_action_discard);
+                iv.setImageResource(R.drawable.ic_cancel_black_24dp);
             }
             i++;
         }
-        if(values.finalScores[index] >= 80)
+        TextView t = (TextView)findViewById(R.id.tvno);
+        t.setText(String.valueOf(count) + "/");
+        TextView t1 = (TextView)findViewById(R.id.tvtotal);
+        t1.setText(String.valueOf(bundle.length));
+        if(progress >= 75)
         {
             progressBar.setProgressColor(Color.parseColor("#B71C1C"));
             name.setTextColor(Color.parseColor("#B71C1C"));
             riskstring.setTextColor(Color.parseColor("#B71C1C"));
             percent.setTextColor(Color.parseColor("#B71C1C"));
         }
-        else if(values.finalScores[index] >= 50)
+        else if(progress >= 50)
         {
             progressBar.setProgressColor(Color.parseColor("#ff9800"));
             name.setTextColor(Color.parseColor("#ff9800"));
@@ -136,8 +151,9 @@ public class ResultDetails extends ActionBarActivity {
         iv5 = (ImageView)findViewById(R.id.imageView6);
         iv6 = (ImageView)findViewById(R.id.imageView7);
         iv7 = (ImageView)findViewById(R.id.imageView8);
-        tvalag = (TextView)findViewById(R.id.tvalag);
-        iv8 = (ImageView)findViewById(R.id.imageView9);
+        tva1 = (TextView)findViewById(R.id.tva1);
+        tva2 = (TextView)findViewById(R.id.tva2);
+        tva3 = (ImageView)findViewById(R.id.tva3);
     }
 
     private void makeViewsInvisible()
@@ -156,6 +172,9 @@ public class ResultDetails extends ActionBarActivity {
         tv12.setVisibility(View.INVISIBLE);
         tv13.setVisibility(View.INVISIBLE);
         tv14.setVisibility(View.INVISIBLE);
+        tva1.setVisibility(View.INVISIBLE);
+        tva2.setVisibility(View.INVISIBLE);
+        tva3.setVisibility(View.INVISIBLE);
         iv1.setVisibility(View.INVISIBLE);
         iv2.setVisibility(View.INVISIBLE);
         iv3.setVisibility(View.INVISIBLE);
@@ -163,8 +182,6 @@ public class ResultDetails extends ActionBarActivity {
         iv5.setVisibility(View.INVISIBLE);
         iv6.setVisibility(View.INVISIBLE);
         iv7.setVisibility(View.INVISIBLE);
-        tvalag.setVisibility(View.INVISIBLE);
-        iv8.setVisibility(View.INVISIBLE);
     }
 
     private void setTagstoViews()
@@ -183,7 +200,9 @@ public class ResultDetails extends ActionBarActivity {
         tv12.setTag("tvdisease5");
         tv13.setTag("tvdisease6");
         tv14.setTag("tvdisease7");
-        tvalag.setTag("tvdiseas8");
+        tva1.setTag("tvindex8");
+        tva2.setTag("tvdisease8");
+        tva3.setTag("iv8");
         iv1.setTag("iv1");
         iv2.setTag("iv2");
         iv3.setTag("iv3");
@@ -191,7 +210,7 @@ public class ResultDetails extends ActionBarActivity {
         iv5.setTag("iv5");
         iv6.setTag("iv6");
         iv7.setTag("iv7");
-        iv8.setTag("iv8");
+
     }
     private int get_index_of_disease(String s)
     {
